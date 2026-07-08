@@ -1,0 +1,14 @@
+<svg width="800" height="1000" viewBox="0 0 800 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="1000" fill="#B8E8FF"/>
+  <path d="M66 212C66 112.589 146.589 32 246 32H554C653.411 32 734 112.589 734 212V788C734 887.411 653.411 968 554 968H246C146.589 968 66 887.411 66 788V212Z" fill="#FFFDF7"/>
+  <circle cx="400" cy="246" r="96" fill="#FFE980"/>
+  <ellipse cx="406" cy="488" rx="178" ry="208" fill="#DFF5FF" stroke="#111111" stroke-width="8"/>
+  <path d="M280 432H376L412 482L376 532H280L316 482L280 432Z" fill="#111111"/>
+  <path d="M304 432H400L436 482L400 532H304L340 482L304 432Z" fill="#FFFFFF"/>
+  <circle cx="352" cy="482" r="28" fill="#111111"/>
+  <path d="M430 432H526L562 482L526 532H430L466 482L430 432Z" fill="#111111"/>
+  <path d="M454 432H550L586 482L550 532H454L490 482L454 432Z" fill="#FFFFFF"/>
+  <circle cx="502" cy="482" r="28" fill="#111111"/>
+  <path d="M318 620H520L578 694L520 768H318L376 694L318 620Z" fill="#111111"/>
+  <path d="M350 632H490L540 694L490 756H350L400 694L350 632Z" fill="#FFFFFF"/>
+</svg>
