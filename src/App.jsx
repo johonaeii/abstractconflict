@@ -220,7 +220,7 @@ export default function App() {
               <SectionTitle
                 index="03"
                 title="About the Artist"
-                body="A short studio profile, a few grounding notes about the work, and a direct contact path for buyers, galleries, and commissions."
+                body="A haberdasherer turned brilliant visual artist."
               />
               <div className="about-layout">
                 <div className="about-copy">
