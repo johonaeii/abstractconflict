@@ -1,12 +1,27 @@
 export const siteContent = {
   artistName: 'Abstract Conflict',
+  kicker: 'Pastel Surrealist Portfolio',
   positioning:
-    'Paintings, drawings, and prints from a pastel surrealist visual world.',
+    'Paintings, drawings, and prints from a strange pastel world with a collectible old-school edge.',
   contactEmailLabel: 'studio@abstractconflict.art',
   instagramHandle: '@abstractconflict',
   instagramUrl: 'https://instagram.com/abstractconflict',
-  inquirySubject: 'Portfolio inquiry',
 }
+
+export const homeHighlights = [
+  {
+    title: 'Originals',
+    copy: 'Graphic, surreal pieces with soft color, hard edges, and a premium gallery-ready finish.',
+  },
+  {
+    title: 'Prints',
+    copy: 'Limited archival editions designed to keep the work accessible without losing its object quality.',
+  },
+  {
+    title: 'Commissions',
+    copy: 'Selective studio collaborations for collectors, interiors, and clients looking for bold visual character.',
+  },
+]
 
 export const featuredWorks = [
   {
@@ -17,17 +32,19 @@ export const featuredWorks = [
     availability: 'Original available',
     image: '/artworks/work-01.svg',
     alt: 'Pastel surreal portrait with blue atmosphere and jagged yellow accents.',
-    inquiryLabel: 'Ask about this original',
+    description:
+      'A portrait-driven painting balancing soft sky color with sharp hypnotic geometry and clean linework.',
   },
   {
     id: 'soft-static',
     title: 'Soft Static',
     medium: 'Mixed media drawing',
     year: '2025',
-    availability: 'Edition print available',
+    availability: 'Print edition available',
     image: '/artworks/work-02.svg',
     alt: 'Graphic surreal drawing with black and white zigzags around a floating face.',
-    inquiryLabel: 'Request print details',
+    description:
+      'A dense pastel drawing built around graphic eyes, alternating stripes, and a slightly uncanny calm.',
   },
   {
     id: 'lullaby-for-signals',
@@ -37,7 +54,8 @@ export const featuredWorks = [
     availability: 'Reserved',
     image: '/artworks/work-03.svg',
     alt: 'Pastel yellow and sky blue abstract figure in a gallery-style frame.',
-    inquiryLabel: 'Join waitlist',
+    description:
+      'A quieter paper work where turquoise, yellow, and black forms are held inside a restrained old-school composition.',
   },
   {
     id: 'borrowed-sun',
@@ -47,7 +65,8 @@ export const featuredWorks = [
     availability: 'Prints available',
     image: '/artworks/work-04.svg',
     alt: 'Print artwork with surreal yellow halo and black jagged mouth motif.',
-    inquiryLabel: 'Buy print',
+    description:
+      'An edition piece that leans more graphic and poster-like, while keeping the strange warmth of the larger paintings.',
   },
   {
     id: 'echo-mouth',
@@ -57,7 +76,8 @@ export const featuredWorks = [
     availability: 'Original sold',
     image: '/artworks/work-05.svg',
     alt: 'Surreal face with hypnotic eye patterns in a pale blue field.',
-    inquiryLabel: 'Request similar work',
+    description:
+      'A collage-forward piece using repeated slanted marks and surreal portrait fragments to create rhythm and tension.',
   },
   {
     id: 'sky-operator',
@@ -67,62 +87,13 @@ export const featuredWorks = [
     availability: 'Commission references available',
     image: '/artworks/work-06.svg',
     alt: 'Soft blue portrait with yellow shapes and controlled zigzag borders.',
-    inquiryLabel: 'Discuss a commission',
+    description:
+      'A pastel drawing that shows the softer side of the practice while keeping the same strange, collectible visual language.',
   },
 ]
 
-export const studioPosts = [
-  {
-    id: 'post-01',
-    image: '/studio/studio-01.svg',
-    alt: 'Detail crop from a pastel surreal painting in progress.',
-    caption: 'Fresh color tests and edge decisions.',
-    instagramUrl: 'https://instagram.com/abstractconflict',
-  },
-  {
-    id: 'post-02',
-    image: '/studio/studio-02.svg',
-    alt: 'Artist studio wall with pinned drawings and print proofs.',
-    caption: 'Drawings becoming print editions.',
-    instagramUrl: 'https://instagram.com/abstractconflict',
-  },
-  {
-    id: 'post-03',
-    image: '/studio/studio-03.svg',
-    alt: 'Pastel yellow and sky blue face study on paper.',
-    caption: 'Face studies for a larger series.',
-    instagramUrl: 'https://instagram.com/abstractconflict',
-  },
-  {
-    id: 'post-04',
-    image: '/studio/studio-04.svg',
-    alt: 'Print layout and paper samples for a surrealist edition.',
-    caption: 'Paper, margins, and edition notes.',
-    instagramUrl: 'https://instagram.com/abstractconflict',
-  },
-  {
-    id: 'post-05',
-    image: '/studio/studio-05.svg',
-    alt: 'Blue and yellow painting detail with sharp black graphic linework.',
-    caption: 'Chasing clean edges inside a strange composition.',
-    instagramUrl: 'https://instagram.com/abstractconflict',
-  },
-  {
-    id: 'post-06',
-    image: '/studio/studio-06.svg',
-    alt: 'Pinned commission sketch concepts in a studio grid.',
-    caption: 'Commission sketches and palette notes.',
-    instagramUrl: 'https://instagram.com/abstractconflict',
-  },
-]
-
-export const buyingNotes = [
-  'Original paintings are released in small drops and available by direct inquiry.',
-  'Print editions are produced on archival paper in limited runs.',
-  'Commissions are selective and work best for collectors, interiors, and editorial projects seeking a surreal but polished visual voice.',
-]
-
-export const bioParagraphs = [
-  'Abstract Conflict builds a visual world where pastel color, sharp pattern, and strange portraiture meet in a clean, collectible format. The work moves between painting, drawing, and printmaking, balancing play with precision.',
-  'The studio practice is rooted in bold character, controlled graphic edges, and emotional atmosphere, creating pieces that feel uncanny, warm, and immediately memorable in a room.',
+export const artistNotes = [
+  'Abstract Conflict builds a visual world where pastel color, slanted graphic pattern, and surreal portraiture meet in a deliberate, old-school presentation. The work pulls from painting, drawing, and printmaking, but keeps a clear collector-facing point of view.',
+  'The pieces are playful without becoming loose, strange without becoming messy, and graphic enough to hold a room. Light turquoise and faded yellow create warmth, while black-and-white patterning keeps the work sharp and memorable.',
+  'The studio is available for original sales, limited print inquiries, selective commissions, and gallery conversations.',
 ]

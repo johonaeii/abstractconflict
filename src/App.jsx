@@ -1,66 +1,42 @@
 import { useEffect, useState } from 'react'
 import {
-  bioParagraphs,
-  buyingNotes,
+  artistNotes,
   featuredWorks,
+  homeHighlights,
   siteContent,
-  studioPosts,
 } from './data/siteContent'
+import artistPortrait from '../img/sc-hero.png'
+import abstractConflictLogo from '../img/logo-ac.png'
 
-function SectionHeading({ eyebrow, title, body }) {
+function SectionTitle({ index, title, body }) {
   return (
-    <div className="section-heading">
-      <p className="eyebrow">{eyebrow}</p>
-      <h2>{title}</h2>
-      {body ? <p className="section-copy">{body}</p> : null}
+    <div className="section-title">
+      <span className="section-index">{index}</span>
+      <div>
+        <h2>{title}</h2>
+        {body ? <p>{body}</p> : null}
+      </div>
     </div>
   )
 }
 
-function PatternBand() {
-  return <div className="pattern-band" aria-hidden="true" />
-}
-
-function WorkCard({ work }) {
+function ArtworkCard({ work, onOpen }) {
   return (
-    <article className="work-card">
-      <div className="work-frame">
+    <article className="artwork-card">
+      <button className="artwork-image-button" type="button" onClick={() => onOpen(work)}>
         <img src={work.image} alt={work.alt} />
-      </div>
-      <div className="work-meta">
-        <div>
+      </button>
+      <div className="artwork-copy">
+        <div className="artwork-heading">
           <h3>{work.title}</h3>
-          <p>
-            {work.medium} · {work.year}
-          </p>
+          <span className="availability-badge">{work.availability}</span>
         </div>
-        <span className="availability-pill">{work.availability}</span>
+        <p className="artwork-meta">
+          {work.medium} · {work.year}
+        </p>
+        <p className="artwork-description">{work.description}</p>
       </div>
-      <a
-        className="text-link"
-        href="#contact"
-      >
-        {work.inquiryLabel}
-      </a>
     </article>
-  )
-}
-
-function StudioGrid({ posts, onPreview }) {
-  return (
-    <div className="studio-grid">
-      {posts.map((post, index) => (
-        <button
-          key={post.id}
-          className={`studio-tile tile-${(index % 3) + 1}`}
-          type="button"
-          onClick={() => onPreview(post)}
-        >
-          <img src={post.image} alt={post.alt} />
-          <span>{post.caption}</span>
-        </button>
-      ))}
-    </div>
   )
 }
 
@@ -84,17 +60,17 @@ function InquiryForm() {
         <input type="email" name="email" autoComplete="email" required />
       </label>
       <label>
-        Artwork interest
-        <select name="artwork-interest" defaultValue="Original painting">
-          <option>Original painting</option>
-          <option>Print edition</option>
+        Interest
+        <select name="interest" defaultValue="Original artwork">
+          <option>Original artwork</option>
+          <option>Prints</option>
           <option>Commission</option>
-          <option>Not sure yet</option>
+          <option>Exhibition / gallery inquiry</option>
         </select>
       </label>
       <label>
-        Budget range
-        <select name="budget-range" defaultValue="Not sure yet">
+        Budget
+        <select name="budget" defaultValue="Not sure yet">
           <option>Under $500</option>
           <option>$500 - $1,500</option>
           <option>$1,500 - $5,000</option>
@@ -107,20 +83,20 @@ function InquiryForm() {
         <textarea
           name="message"
           rows="5"
-          placeholder="Tell me which piece, print, or commission direction you have in mind."
+          placeholder="Tell the studio which piece, print, or project you have in mind."
           required
         />
       </label>
-      <button className="button button-primary" type="submit">
+      <button className="action-button" type="submit">
         Send Inquiry
       </button>
     </form>
   )
 }
 
-function PreviewModal({ post, onClose }) {
+function ArtworkModal({ artwork, onClose }) {
   useEffect(() => {
-    if (!post) return undefined
+    if (!artwork) return undefined
 
     const onKeyDown = (event) => {
       if (event.key === 'Escape') onClose()
@@ -133,165 +109,153 @@ function PreviewModal({ post, onClose }) {
       window.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = ''
     }
-  }, [post, onClose])
+  }, [artwork, onClose])
 
-  if (!post) return null
+  if (!artwork) return null
 
   return (
     <div className="modal-backdrop" role="dialog" aria-modal="true">
+      <button className="modal-scrim" type="button" onClick={onClose} aria-label="Close artwork preview" />
       <div className="modal-card">
         <button className="modal-close" type="button" onClick={onClose}>
           Close
         </button>
-        <img src={post.image} alt={post.alt} />
-        <div className="modal-copy">
-          <p>{post.caption}</p>
-          <a className="text-link" href={post.instagramUrl} target="_blank" rel="noreferrer">
-            View on Instagram
-          </a>
+        <img src={artwork.image} alt={artwork.alt} />
+        <div className="modal-details">
+          <h3>{artwork.title}</h3>
+          <p>
+            {artwork.medium} · {artwork.year}
+          </p>
+          <p>{artwork.description}</p>
         </div>
       </div>
-      <button className="modal-scrim" type="button" onClick={onClose} aria-label="Close preview" />
     </div>
   )
 }
 
 export default function App() {
-  const [previewPost, setPreviewPost] = useState(null)
+  const [activeArtwork, setActiveArtwork] = useState(null)
 
   return (
     <>
-      <div className="site-shell">
-        <header className="topbar">
-          <a className="brand" href="#top">
-            <span className="brand-mark" aria-hidden="true" />
-            {siteContent.artistName}
-          </a>
-          <nav className="nav">
-            <a href="#work">Work</a>
-            <a href="#studio">Studio</a>
-            <a href="#buying">Buying</a>
-            <a href="#bio">Bio</a>
-            <a href="#contact">Contact</a>
-          </nav>
-        </header>
-
-        <main id="top">
-          <section className="hero">
-            <div className="hero-copy">
-              <p className="eyebrow">Visual Art Portfolio</p>
-              <h1>{siteContent.artistName}</h1>
-              <p className="hero-text">{siteContent.positioning}</p>
-              <div className="hero-actions">
-                <a className="button button-primary" href="#work">
-                  View Work
-                </a>
-                <a className="button button-secondary" href="#contact">
-                  Inquire / Buy Prints
-                </a>
+      <div className="page-shell">
+        <div className="content-board">
+          <header className="masthead" id="home">
+            <div className="brand-stack">
+              <img className="brand-logo" src={abstractConflictLogo} alt="" />
+              <div>
+                <p className="brand-kicker">{siteContent.kicker}</p>
+                <h1>{siteContent.artistName}</h1>
               </div>
             </div>
-            <div className="hero-art">
-              <div className="hero-frame">
-                <img
-                  src="/artworks/hero-feature.svg"
-                  alt="Featured surreal pastel artwork with graphic eyes and jagged hypnotic patterns."
-                />
-              </div>
-              <PatternBand />
-            </div>
-          </section>
 
-          <section className="featured-section" id="work">
-            <SectionHeading
-              eyebrow="Featured Works"
-              title="A clean digital gallery for bold, strange, collectible work."
-              body="Paintings, drawings, and prints presented with the pacing and clarity of a professional collector portfolio."
-            />
-            <div className="works-grid">
-              {featuredWorks.map((work) => (
-                <WorkCard key={work.id} work={work} />
-              ))}
-            </div>
-          </section>
+            <nav className="top-tabs" aria-label="Primary">
+              <a href="#home">Home</a>
+              <a href="#artwork">Artwork</a>
+              <a href="#about">About the Artist</a>
+            </nav>
+          </header>
 
-          <section className="studio-section" id="studio">
-            <SectionHeading
-              eyebrow="Recent Studio Work"
-              title="Current process, handled like portfolio material."
-              body="A curated look at ongoing paintings, print prep, and works in progress."
-            />
-            <StudioGrid posts={studioPosts} onPreview={setPreviewPost} />
-            <a
-              className="button button-primary"
-              href={siteContent.instagramUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Follow the Process
-            </a>
-          </section>
+          <div className="marquee-bar" aria-label="Studio update">
+            <span>✦ WELCOME TO THE ABSTRACT CONFLICT ONLINE STUDIO ✦ ORIGINALS · PRINTS · COMMISSIONS ✦</span>
+          </div>
 
-          <section className="buying-section" id="buying">
-            <div className="buying-panel">
-              <SectionHeading
-                eyebrow="Prints / Commissions / Buying Info"
-                title="Straightforward ways to collect the work."
-                body="Whether you are looking for an original, a limited print, or a commission, the process is direct and conversation-led."
-              />
-              <div className="notes-grid">
-                {buyingNotes.map((note) => (
-                  <div key={note} className="note-card">
-                    <p>{note}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section className="bio-section" id="bio">
-            <SectionHeading
-              eyebrow="Artist Bio"
-              title="Surreal, playful, and grounded enough for serious walls."
-            />
-            <div className="bio-card">
-              {bioParagraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
-          </section>
-
-          <section className="contact-section" id="contact">
-            <div className="contact-card">
-              <SectionHeading
-                eyebrow="Contact / Inquiry"
-                title="Collectors, galleries, and clients can reach the studio here."
-                body="Use the form for original work, print availability, commissions, or exhibition conversations."
-              />
-              <div className="contact-grid">
-                <div className="contact-details">
-                  <div className="trust-box">
-                    <span className="detail-label">Email</span>
-                    <p>{siteContent.contactEmailLabel}</p>
-                  </div>
-                  <div className="trust-box">
-                    <span className="detail-label">Instagram</span>
-                    <a href={siteContent.instagramUrl} target="_blank" rel="noreferrer">
-                      {siteContent.instagramHandle}
-                    </a>
-                  </div>
-                  <div className="trust-box">
-                    <span className="detail-label">Best for</span>
-                    <p>Original inquiries, print requests, commissions, and gallery outreach.</p>
+          <main className="board-main">
+            <section className="home-panel">
+              <div className="hero-layout">
+                <div className="hero-art-panel">
+                  <div className="hero-image-frame">
+                    <img
+                      src={artistPortrait}
+                      alt="The artist in a yellow sweatshirt, holding a lighter in front of a painted mural."
+                    />
+                    <p className="image-caption">SC // ARTIST AT WORK // 2026</p>
                   </div>
                 </div>
-                <InquiryForm />
+
+                <div className="hero-copy-panel">
+                  <SectionTitle
+                    index="01"
+                    title="Home"
+                    body={siteContent.positioning}
+                  />
+                  <div className="highlight-list">
+                    {homeHighlights.map((item) => (
+                      <div key={item.title} className="highlight-card">
+                        <h3>{item.title}</h3>
+                        <p>{item.copy}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="hero-actions">
+                    <a className="action-button" href="#artwork">
+                      View Artwork
+                    </a>
+                    <a className="ghost-button" href="#about">
+                      Meet the Artist
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
-          </section>
-        </main>
+            </section>
+
+            <section className="artwork-panel" id="artwork">
+              <SectionTitle
+                index="02"
+                title="Artwork"
+                body="A tighter gallery inspired by the reference site’s centered shopping-window feel, but rebuilt as a collector-facing portfolio."
+              />
+              <div className="artwork-grid">
+                {featuredWorks.map((work) => (
+                  <ArtworkCard key={work.id} work={work} onOpen={setActiveArtwork} />
+                ))}
+              </div>
+            </section>
+
+            <section className="about-panel" id="about">
+              <SectionTitle
+                index="03"
+                title="About the Artist"
+                body="A short studio profile, a few grounding notes about the work, and a direct contact path for buyers, galleries, and commissions."
+              />
+              <div className="about-layout">
+                <div className="about-copy">
+                  {artistNotes.map((note) => (
+                    <p key={note}>{note}</p>
+                  ))}
+
+                  <div className="contact-block">
+                    <div className="contact-item">
+                      <span>Email</span>
+                      <p>{siteContent.contactEmailLabel}</p>
+                    </div>
+                    <div className="contact-item">
+                      <span>Instagram</span>
+                      <a href={siteContent.instagramUrl} target="_blank" rel="noreferrer">
+                        {siteContent.instagramHandle}
+                      </a>
+                    </div>
+                    <div className="contact-item">
+                      <span>Best for</span>
+                      <p>Originals, print inquiries, commissions, and gallery outreach.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="about-form-panel">
+                  <h3>Start an inquiry</h3>
+                  <p>
+                    Use the form for available work, edition requests, commissions, or exhibition conversations.
+                  </p>
+                  <InquiryForm />
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
       </div>
-      <PreviewModal post={previewPost} onClose={() => setPreviewPost(null)} />
+
+      <ArtworkModal artwork={activeArtwork} onClose={() => setActiveArtwork(null)} />
     </>
   )
 }
