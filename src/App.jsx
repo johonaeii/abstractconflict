@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react'
 import {
   artistNotes,
-  featuredWorks,
   homeHighlights,
   siteContent,
 } from './data/siteContent'
@@ -20,23 +18,70 @@ function SectionTitle({ index, title, body }) {
   )
 }
 
-function ArtworkCard({ work, onOpen }) {
-  return (
-    <article className="artwork-card">
-      <button className="artwork-image-button" type="button" onClick={() => onOpen(work)}>
-        <img src={work.image} alt={work.alt} />
-      </button>
-      <div className="artwork-copy">
-        <div className="artwork-heading">
-          <h3>{work.title}</h3>
-          <span className="availability-badge">{work.availability}</span>
+import { useEffect, useState } from 'react'
+
+function InstagramFeed() {
+  const [posts, setPosts] = useState([])
+  const [status, setStatus] = useState('loading')
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    fetch('/.netlify/functions/instagram-feed', { signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error('Instagram feed is unavailable')
+        return response.json()
+      })
+      .then((data) => {
+        setPosts(data.posts ?? [])
+        setStatus('ready')
+      })
+      .catch((error) => {
+        if (error.name !== 'AbortError') setStatus('fallback')
+      })
+
+    return () => controller.abort()
+  }, [])
+
+  if (status === 'loading') {
+    return <p className="feed-status">Connecting to Instagram...</p>
+  }
+
+  if (status === 'fallback' || posts.length === 0) {
+    return (
+      <div className="instagram-fallback">
+        <img src={abstractConflictLogo} alt="Abstract Conflict illustrated logo" />
+        <div>
+          <p className="instagram-handle">@abstract.conflict</p>
+          <p>See the latest artwork, studio updates, and new releases on Instagram.</p>
+          <a className="action-button" href={siteContent.instagramUrl} target="_blank" rel="noreferrer">
+            Open Instagram Profile ↗
+          </a>
         </div>
-        <p className="artwork-meta">
-          {work.medium} · {work.year}
-        </p>
-        <p className="artwork-description">{work.description}</p>
       </div>
-    </article>
+    )
+  }
+
+  return (
+    <div className="instagram-grid">
+      {posts.map((post) => (
+        <a
+          className="instagram-post"
+          href={post.permalink}
+          target="_blank"
+          rel="noreferrer"
+          key={post.id}
+          aria-label="View this post on Instagram"
+        >
+          {post.mediaType === 'VIDEO' ? (
+            <video src={post.mediaUrl} poster={post.thumbnailUrl} muted playsInline preload="metadata" />
+          ) : (
+            <img src={post.mediaUrl} alt={post.caption || 'Recent post by Abstract Conflict'} loading="lazy" />
+          )}
+          <span className="post-overlay">View on Instagram ↗</span>
+        </a>
+      ))}
+    </div>
   )
 }
 
@@ -94,51 +139,9 @@ function InquiryForm() {
   )
 }
 
-function ArtworkModal({ artwork, onClose }) {
-  useEffect(() => {
-    if (!artwork) return undefined
-
-    const onKeyDown = (event) => {
-      if (event.key === 'Escape') onClose()
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-    document.body.style.overflow = 'hidden'
-
-    return () => {
-      window.removeEventListener('keydown', onKeyDown)
-      document.body.style.overflow = ''
-    }
-  }, [artwork, onClose])
-
-  if (!artwork) return null
-
-  return (
-    <div className="modal-backdrop" role="dialog" aria-modal="true">
-      <button className="modal-scrim" type="button" onClick={onClose} aria-label="Close artwork preview" />
-      <div className="modal-card">
-        <button className="modal-close" type="button" onClick={onClose}>
-          Close
-        </button>
-        <img src={artwork.image} alt={artwork.alt} />
-        <div className="modal-details">
-          <h3>{artwork.title}</h3>
-          <p>
-            {artwork.medium} · {artwork.year}
-          </p>
-          <p>{artwork.description}</p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export default function App() {
-  const [activeArtwork, setActiveArtwork] = useState(null)
-
   return (
-    <>
-      <div className="page-shell">
+    <div className="page-shell">
         <div className="content-board">
           <header className="masthead" id="home">
             <div className="brand-stack">
@@ -151,7 +154,7 @@ export default function App() {
 
             <nav className="top-tabs" aria-label="Primary">
               <a href="#home">Home</a>
-              <a href="#artwork">Artwork</a>
+              <a href="#instagram">Instagram</a>
               <a href="#about">About the Artist</a>
             </nav>
           </header>
@@ -188,8 +191,8 @@ export default function App() {
                     ))}
                   </div>
                   <div className="hero-actions">
-                    <a className="action-button" href="#artwork">
-                      View Artwork
+                    <a className="action-button" href="#instagram">
+                      Latest on Instagram
                     </a>
                     <a className="ghost-button" href="#about">
                       Meet the Artist
@@ -199,16 +202,17 @@ export default function App() {
               </div>
             </section>
 
-            <section className="artwork-panel" id="artwork">
+            <section className="instagram-panel" id="instagram">
               <SectionTitle
                 index="02"
-                title="Artwork"
-                body="A tighter gallery inspired by the reference site’s centered shopping-window feel, but rebuilt as a collector-facing portfolio."
+                title="Latest on Instagram"
+                body="The newest posts from @abstract.conflict. Follow along for finished work, experiments, studio updates, and releases."
               />
-              <div className="artwork-grid">
-                {featuredWorks.map((work) => (
-                  <ArtworkCard key={work.id} work={work} onOpen={setActiveArtwork} />
-                ))}
+              <InstagramFeed />
+              <div className="instagram-footer">
+                <a className="ghost-button" href={siteContent.instagramUrl} target="_blank" rel="noreferrer">
+                  Follow @abstract.conflict ↗
+                </a>
               </div>
             </section>
 
@@ -253,9 +257,6 @@ export default function App() {
             </section>
           </main>
         </div>
-      </div>
-
-      <ArtworkModal artwork={activeArtwork} onClose={() => setActiveArtwork(null)} />
-    </>
+    </div>
   )
 }

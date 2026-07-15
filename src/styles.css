@@ -100,8 +100,8 @@ button, input, select, textarea { font: inherit; }
 .marquee-bar span { display: block; text-align: center; }
 
 .board-main { padding: clamp(1rem, 3vw, 2rem); }
-.home-panel, .artwork-panel, .about-panel { padding: .3rem 0 2rem; scroll-margin-top: 1rem; }
-.home-panel + .artwork-panel, .artwork-panel + .about-panel {
+.home-panel, .instagram-panel, .about-panel { padding: .3rem 0 2rem; scroll-margin-top: 1rem; }
+.home-panel + .instagram-panel, .instagram-panel + .about-panel {
   margin-top: 1rem;
   padding-top: 2rem;
   border-top: 4px double var(--ink);
@@ -152,17 +152,18 @@ button, input, select, textarea { font: inherit; }
 .ghost-button { background: #efefef; }
 .action-button:active, .ghost-button:active { border-style: inset; }
 
-.artwork-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-.artwork-card { overflow: hidden; box-shadow: 5px 5px 0 var(--ink); }
-.artwork-image-button { width: 100%; padding: 0; border: 0; background: transparent; cursor: pointer; }
-.artwork-image-button img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-bottom: 2px solid var(--ink); background: var(--aqua); }
-.artwork-image-button:hover img, .artwork-image-button:focus-visible img { filter: contrast(1.08); }
-.artwork-copy { padding: 1rem; }
-.artwork-heading { display: flex; gap: .75rem; align-items: start; justify-content: space-between; }
-.artwork-heading h3 { font-size: 1.2rem; }
-.availability-badge { flex-shrink: 0; padding: .32rem .55rem; border: 1px solid var(--ink); background: var(--paper); font: bold .68rem "Courier New", monospace; text-transform: uppercase; }
-.artwork-meta { margin-top: .4rem; font-size: .9rem; }
-.artwork-description { margin-top: .7rem; }
+.feed-status { padding: 2rem; border: 2px dashed var(--ink); background: #fff; text-align: center; font: bold .85rem "Courier New", monospace; }
+.instagram-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+.instagram-post { position: relative; display: block; overflow: hidden; aspect-ratio: 1; border: 3px solid var(--ink); background: #fff; box-shadow: 5px 5px 0 var(--ink); }
+.instagram-post img, .instagram-post video { width: 100%; height: 100%; object-fit: cover; transition: transform .18s ease; }
+.instagram-post:hover img, .instagram-post:hover video, .instagram-post:focus-visible img, .instagram-post:focus-visible video { transform: scale(1.035); }
+.post-overlay { position: absolute; inset: auto 0 0; padding: .55rem; background: #080808; color: #fff; font: bold .7rem "Courier New", monospace; transform: translateY(100%); transition: transform .18s ease; }
+.instagram-post:hover .post-overlay, .instagram-post:focus-visible .post-overlay { transform: translateY(0); }
+.instagram-footer { display: flex; justify-content: center; margin-top: 1.3rem; }
+.instagram-fallback { display: grid; grid-template-columns: minmax(150px, 260px) 1fr; align-items: center; gap: 1.5rem; padding: 1rem; border: 3px solid var(--ink); background: #fff; box-shadow: 7px 7px 0 var(--aqua-deep); }
+.instagram-fallback img { width: 100%; border: 2px solid var(--ink); }
+.instagram-fallback p { line-height: 1.55; }
+.instagram-handle { margin: 0; font: bold clamp(1.5rem, 4vw, 2.8rem) Georgia, serif; }
 
 .about-copy, .about-form-panel { padding: 1.1rem; }
 .about-copy p + p { margin-top: .9rem; }
@@ -204,13 +205,12 @@ button, input, select, textarea { font: inherit; }
   .top-tabs a:last-child { border-bottom: 2px solid var(--ink); }
   .marquee-bar span { text-align: left; }
   .board-main { padding: 1rem; }
-  .artwork-grid, .inquiry-form { grid-template-columns: 1fr; }
+  .instagram-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .instagram-fallback, .inquiry-form { grid-template-columns: 1fr; }
   .section-title { gap: .55rem; }
   .section-title h2 { font-size: 2rem; }
   .hero-actions { display: grid; }
   .action-button, .ghost-button { width: 100%; }
-  .artwork-heading { display: grid; }
-  .availability-badge { justify-self: start; }
 }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

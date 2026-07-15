@@ -4,8 +4,8 @@ export const siteContent = {
   positioning:
     'Paintings, drawings, and prints from a strange pastel world with a collectible old-school edge.',
   contactEmailLabel: 'studio@abstractconflict.art',
-  instagramHandle: '@abstractconflict',
-  instagramUrl: 'https://instagram.com/abstractconflict',
+  instagramHandle: '@abstract.conflict',
+  instagramUrl: 'https://www.instagram.com/abstract.conflict/',
 }
 
 export const homeHighlights = [
