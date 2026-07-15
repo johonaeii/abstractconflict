@@ -11,7 +11,7 @@ export const siteContent = {
 export const homeHighlights = [
   {
     title: 'Originals',
-    copy: 'Graphic, surreal pieces with soft color, hard edges, and a premium gallery-ready finish.',
+    copy: '"Abstract conflict", describes the whole thing.',
   },
   {
     title: 'Prints',
@@ -93,7 +93,7 @@ export const featuredWorks = [
 ]
 
 export const artistNotes = [
-  'Abstract Conflict builds a visual world where pastel color, slanted graphic pattern, and surreal portraiture meet in a deliberate, old-school presentation. The work pulls from painting, drawing, and printmaking, but keeps a clear collector-facing point of view.',
-  'The pieces are playful without becoming loose, strange without becoming messy, and graphic enough to hold a room. Light turquoise and faded yellow create warmth, while black-and-white patterning keeps the work sharp and memorable.',
+  'Abstract Conflict builds a visual world where blah blah blah blah...',
+  'The pieces are [REDACTED] without becoming [REDACTED], strange without becoming messy, and yada yada yada...',
   'The studio is available for original sales, limited print inquiries, selective commissions, and gallery conversations.',
 ]
